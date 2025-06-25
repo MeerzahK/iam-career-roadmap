@@ -1,4 +1,3 @@
-cat > README.md << 'EOF'
 # 🛡️ IAM + DevOps Roadmap (12-Month Transition Plan)
 
 This repository documents my transition from IT Support to IAM and DevOps engineering. It includes certifications, automation projects, security tooling, monitoring, and a final capstone project called SecureIDOps.
@@ -18,4 +17,4 @@ This repository documents my transition from IT Support to IAM and DevOps engine
 - `progress/`: Logs and goal tracking
 
 MIT License
-EOF
+
