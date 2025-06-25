@@ -16,5 +16,4 @@ This repository documents my transition from IT Support to IAM and DevOps engine
 - `tools/`: Scripts and reusable configs
 - `progress/`: Logs and goal tracking
 
-MIT License
 
