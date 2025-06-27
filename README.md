@@ -1,4 +1,4 @@
-# 🛡️ IAM + DevOps Roadmap (12-Month Transition Plan)
+# 🛡️ IAM + DevOps Roadmap (Transition Plan)
 
 This repository documents my transition from IT Support to IAM and DevOps engineering. It includes certifications, automation projects, security tooling, monitoring, and a final capstone project called SecureIDOps.
 
