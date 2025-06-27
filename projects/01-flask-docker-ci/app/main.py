@@ -1,3 +1,11 @@
+from dotenv import load_dotenv
+load_dotenv()
+
+import os
+
+ISSUER = os.getenv("OKTA_ISSUER")
+AUDIENCE = os.getenv("OKTA_AUDIENCE")
+
 from flask import Flask, jsonify
 
 app = Flask(__name__)
