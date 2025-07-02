@@ -28,6 +28,7 @@ jobs:
           context: ./projects/01-flask-docker-ci
           file: ./projects/01-flask-docker-ci/Dockerfile
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/iam-flask-okta:latest
           build-args: |
             OKTA_ISSUER=${{ secrets.OKTA_ISSUER }}
