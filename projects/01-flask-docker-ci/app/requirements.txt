@@ -1,4 +1,4 @@
 flask
 requests
 python-dotenv
-PyJWT
+PyJWT==2.8.0
