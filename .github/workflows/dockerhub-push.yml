@@ -30,6 +30,7 @@ jobs:
            file: ./projects/01-flask-docker-ci/Dockerfile
            push: true
            tags: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/iam-flask-okta:latest
+    
     build-args: |
       OKTA_ISSUER=${{ secrets.OKTA_ISSUER }}
       OKTA_AUDIENCE=${{ secrets.OKTA_AUDIENCE }}
