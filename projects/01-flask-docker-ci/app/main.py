@@ -4,7 +4,7 @@ import requests
 import os
 import json
 from dotenv import load_dotenv
-from jwt.algorithms import RSAAlgorithm
+from jwt import RSAAlgorithm
 
 load_dotenv()
 
