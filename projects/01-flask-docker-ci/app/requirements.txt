@@ -6,7 +6,7 @@
 # If you have specific versions in mind, you can uncomment the lines below
 requests
 python-dotenv
-PyJWT=2.10.1
+PyJWT=2.6.0
 jwt
 cryptography   
 Flask   
