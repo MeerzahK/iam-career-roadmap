@@ -4,7 +4,7 @@ import requests
 import os
 import json
 from dotenv import load_dotenv
-from jwt import RSAAlgorithm
+from jwt import RSAAlgorithm # Corrected import statement
 
 load_dotenv()
 
@@ -19,7 +19,7 @@ jwks = requests.get(JWKS_URL).json()
 public_keys = {}
 for key in jwks["keys"]:
     kid = key["kid"]
-    public_keys[kid] = jwt.algorithms.RSAAlgorithm.from_jwk(json.dumps(key))
+    public_keys[kid] = RSAAlgorithm.from_jwk(json.dumps(key))
 
 def verify_token(token):
     header = jwt.get_unverified_header(token)
