@@ -31,7 +31,7 @@ jobs:
            push: true
            tags: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/iam-flask-okta:latest
     
-    build-args: |
-      OKTA_ISSUER=${{ secrets.OKTA_ISSUER }}
-      OKTA_AUDIENCE=${{ secrets.OKTA_AUDIENCE }}
-      FLASK_ENV=${{ secrets.FLASK_ENV }}
+  build-args:
+    OKTA_ISSUER: ${{ secrets.OKTA_ISSUER }}
+    OKTA_AUDIENCE: ${{ secrets.OKTA_AUDIENCE }}
+    FLASK_ENV: ${{ secrets.FLASK_ENV }}
