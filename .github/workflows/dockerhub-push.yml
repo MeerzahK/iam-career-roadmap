@@ -1,16 +1,15 @@
-name: Build and Push Docker Image
+name: Build and Push Docker Image to Docker Hub
 
 on:
   push:
-    branches: 
-    - main 
-    
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   docker:
     runs-on: ubuntu-latest
 
-  steps:
+    steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -20,17 +19,17 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push Docker image
+      - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-           context: ./projects/01-flask-docker-ci
-           file: ./projects/01-flask-docker-ci/Dockerfile
-           push: true
-           tags: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/iam-flask-okta:latest
-           build-args:
-              OKTA_ISSUER: ${{ secrets.OKTA_ISSUER }}
-              OKTA_AUDIENCE: ${{ secrets.OKTA_AUDIENCE }}
-              FLASK_ENV: ${{ secrets.FLASK_ENV }}
+          context: ./projects/01-flask-docker-ci
+          file: ./projects/01-flask-docker-ci/Dockerfile
+          push: true
+          tags: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/iam-flask-okta:latest
+          build-args: |
+            OKTA_ISSUER=${{ secrets.OKTA_ISSUER }}
+            OKTA_AUDIENCE=${{ secrets.OKTA_AUDIENCE }}
+            FLASK_ENV=${{ secrets.FLASK_ENV }}
