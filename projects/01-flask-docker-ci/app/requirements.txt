@@ -4,8 +4,8 @@
 # You can specify versions if needed, e.g., requests==2.25.1
 # or leave them as is to use the latest versions
 # If you have specific versions in mind, you can uncomment the lines below
-requests==2.25.1
-python-dotenv==0.19.0
-PyJWT==2.8.0
-jwt==1.0.0
-cryptography==3.4.7       
+requests
+python-dotenv
+PyJWT
+jwt
+cryptography      
