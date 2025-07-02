@@ -1,12 +1,6 @@
-# For JWT verification
-# Add any other dependencies you need for your Flask app
-# Ensure you have the correct versions for compatibility
-# You can specify versions if needed, e.g., requests==2.25.1
-# or leave them as is to use the latest versions
-# If you have specific versions in mind, you can uncomment the lines below
+flask
 requests
 python-dotenv
-PyJWT==2.10.1
-jwt
-cryptography   
-Flask   
+PyJWT==2.8.0
+cryptography
+    

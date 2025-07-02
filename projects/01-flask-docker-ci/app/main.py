@@ -1,30 +1,46 @@
-from flask import Flask, request, jsonify
+import os
 import jwt
 import requests
-import os
-import json
+from flask import Flask, request, jsonify
 from dotenv import load_dotenv
-from PyJWT import RSAAlgorithm # type: ignore # Corrected import statement
+# Importing RSAAlgorithm from PyJWT
+#from jwt.algorithms import RSAAlgorithm  # Corrected import statement
 
+
+# Load environment variables from .env or build args
 load_dotenv()
 
 app = Flask(__name__)
 
+# Environment configs
 ISSUER = os.getenv("OKTA_ISSUER")
 AUDIENCE = os.getenv("OKTA_AUDIENCE")
 JWKS_URL = f"{ISSUER}/v1/keys"
 
-# Cache the public keys
+# Fetch and cache Okta public keys
 jwks = requests.get(JWKS_URL).json()
-public_keys = {}
-for key in jwks["keys"]:
-    kid = key["kid"]
-    public_keys[kid] = RSAAlgorithm.from_jwk(json.dumps(key))
+public_keys = {
+    key["kid"]: jwt.algorithms.RSAAlgorithm.from_jwk(key)
+    for key in jwks["keys"]
+}
 
 def verify_token(token):
+    """Decode and verify the Okta-issued JWT"""
     header = jwt.get_unverified_header(token)
-    rsa_key = public_keys.get(header["kid"])
-    return jwt.decode(token, rsa_key, algorithms=["RS256"], audience=AUDIENCE, issuer=ISSUER)
+    key = public_keys.get(header["kid"])
+    if not key:
+        raise Exception("Invalid token: key not found.")
+    return jwt.decode(
+        token,
+        key,
+        algorithms=["RS256"],
+        audience=AUDIENCE,
+        issuer=ISSUER
+    )
+
+@app.route("/health")
+def health_check():
+    return jsonify({"status": "ok"})
 
 @app.route("/protected")
 def protected():
@@ -33,27 +49,25 @@ def protected():
         return jsonify({"error": "Missing or malformed token"}), 401
 
     token = auth_header.split(" ")[1]
+
     try:
         payload = verify_token(token)
+        user_type = payload.get("user_type", "regular")
 
-        scopes = payload.get("scp", [])
-        if "read" not in scopes:
-            return jsonify({"error": "Missing required scope: read"}), 403
+        if user_type != "admin":
+            return jsonify({"error": "Access denied: admin only"}), 403
 
         return jsonify({
-            "message": "Access granted with scope 'read'",
-            "scopes": scopes,
+            "message": f"Access granted for {user_type} user",
             "claims": payload
         })
 
     except jwt.ExpiredSignatureError:
         return jsonify({"error": "Token expired"}), 401
     except jwt.InvalidTokenError as e:
-        return jsonify({"error": str(e)}), 403
-
-@app.route("/health")
-def health():
-    return jsonify({"status": "ok"})
+        return jsonify({"error": f"Invalid token: {str(e)}"}), 403
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001)
+    app.run(host="0.0.0.0", port=5001, debug=True)
