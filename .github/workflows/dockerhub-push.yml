@@ -23,15 +23,14 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-       -name: Build and Push Docker image
+      - name: Build and Push Docker image
         uses: docker/build-push-action@v4
         with:
            context: ./projects/01-flask-docker-ci
            file: ./projects/01-flask-docker-ci/Dockerfile
            push: true
            tags: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/iam-flask-okta:latest
-    
-  build-args:
-    OKTA_ISSUER: ${{ secrets.OKTA_ISSUER }}
-    OKTA_AUDIENCE: ${{ secrets.OKTA_AUDIENCE }}
-    FLASK_ENV: ${{ secrets.FLASK_ENV }}
+           build-args:
+              OKTA_ISSUER: ${{ secrets.OKTA_ISSUER }}
+              OKTA_AUDIENCE: ${{ secrets.OKTA_AUDIENCE }}
+              FLASK_ENV: ${{ secrets.FLASK_ENV }}
