@@ -4,7 +4,7 @@ import requests
 import os
 import json
 from dotenv import load_dotenv
-from jwt import RSAAlgorithm # Corrected import statement
+from PyJWT import RSAAlgorithm # type: ignore # Corrected import statement
 
 load_dotenv()
 
